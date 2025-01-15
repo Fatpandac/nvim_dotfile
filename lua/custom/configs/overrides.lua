@@ -113,7 +113,7 @@ M.telescope = {
     },
   },
 
-  extensions_list = { "themes", "terms", "fzf", "harpoon" },
+  extensions_list = { "themes", "terms", "fzf" },
 }
 
 return M

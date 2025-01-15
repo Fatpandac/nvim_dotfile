@@ -2,6 +2,24 @@ local overrides = require "custom.configs.overrides"
 
 local plugins = {
   {
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    opts = {
+      keymaps = {
+        show_help = 'g?',
+      },
+    },
+  },
+  {
+    "narutoxy/silicon.lua",
+    requires = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("silicon").setup {
+        theme = "Visual Studio Dark+",
+      }
+    end,
+  },
+  {
     "VonHeikemen/fine-cmdline.nvim",
     event = "BufEnter",
     dependencies = {
@@ -20,12 +38,6 @@ local plugins = {
   {
     "nvim-telescope/telescope-fzf-native.nvim",
     build = "make",
-  },
-  {
-    "ThePrimeagen/harpoon",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
   },
   {
     "github/copilot.vim",
@@ -50,13 +62,6 @@ local plugins = {
       url_open.setup {
         deep_pattern = true,
       }
-    end,
-  },
-  {
-    "max397574/better-escape.nvim",
-    event = "InsertEnter",
-    config = function()
-      require("better_escape").setup()
     end,
   },
   {
