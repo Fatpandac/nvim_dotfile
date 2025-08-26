@@ -6,15 +6,12 @@ local sources = {
   -- webdev stuff
   b.formatting.eslint_d,
   -- so prettier works only on these filetypes
-  b.formatting.prettier.with { filetypes = { "html", "markdown", "css", "vue", "json"} },
+  b.formatting.prettier.with { filetypes = { "html", "markdown", "css", "vue", "json" } },
   b.formatting.black.with { filetypes = { "python" } },
-
-  -- Lua
-  b.formatting.stylua,
+  b.formatting.jq.with { filetypes = { "json" } },
 }
 
 null_ls.setup {
   debug = true,
   sources = sources,
 }
-

@@ -54,7 +54,7 @@ autocmd("VimResized", {
   command = "tabdo wincmd =",
 })
 
-autocmd({"BufEnter", "WinEnter"}, {
+autocmd({ "BufEnter", "WinEnter" }, {
   pattern = "*",
   command = "set statusline=%{repeat('',winwidth('.'))}",
 })

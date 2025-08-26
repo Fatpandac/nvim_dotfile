@@ -3,7 +3,7 @@ local capabilities = require("plugins.configs.lspconfig").capabilities
 local lspconfig = require "lspconfig"
 
 -- if you just want default config for the servers then put them in a table
-local servers = { "html", "cssls", "ts_ls", "pyright", "rust_analyzer", "eslint" }
+local servers = { "html", "cssls", "pyright", "rust_analyzer", "eslint", "jsonls", "unocss" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -12,24 +12,24 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-local inlayHintsConfig = {
-  includeInlayEnumMemberValueHints = true,
-  includeInlayFunctionLikeReturnTypeHints = false,
-  includeInlayFunctionParameterTypeHints = true,
-  includeInlayParameterNameHints = "literals", -- 'none' | 'literals' | 'all';
-  includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-  includeInlayPropertyDeclarationTypeHints = true,
-  includeInlayVariableTypeHints = false,
-}
-
 lspconfig.ts_ls.setup {
-  settings = {
-    javascript = {
-      inlayHints = inlayHintsConfig,
+  on_attach = on_attach,
+  capabilities = capabilities,
+  init_options = {
+    plugins = {
+      {
+        name = '@vue/typescript-plugin',
+        location = os.getenv("HOME") .. "/.local/share/fnm/aliases/default/lib/node_modules/@vue/language-server",
+        languages = { 'vue' },
+      },
     },
-    typescript = {
-      inlayHints = inlayHintsConfig,
-    },
+  },
+  filetypes = {
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "javascriptreact",
+    "vue",
   },
 }
 
@@ -37,29 +37,11 @@ lspconfig.volar.setup {
   on_attach = on_attach,
   capabilities = capabilities,
   init_options = {
-    vue = {
-      hybridMode = false,
-    },
     typescript = {
       tsdk = "/opt/homebrew/lib/node_modules/typescript/lib",
     },
   },
   flags = { debounce_text_changes = 150 },
-  settings = {
-    volar = { autoCompleteRefs = true },
-  },
-}
-
-lspconfig.tailwindcss.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    tailwindCSS = {
-      lint = {
-        cssConflict = "ignore",
-      },
-    },
-  },
 }
 
 lspconfig.eslint.setup {}

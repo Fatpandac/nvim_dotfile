@@ -57,6 +57,8 @@ M.mason = {
   },
 }
 
+local image_preview = require("custom.configs.image-preview")
+
 M.telescope = {
   defaults = {
     vimgrep_arguments = {
@@ -97,11 +99,10 @@ M.telescope = {
     borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
     color_devicons = true,
     set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
-    file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-    grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+    file_previewer = image_preview.file_previewer,
     qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
     -- Developer configurations: Not meant for general override
-    buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
+    buffer_previewer_maker = image_preview.buffer_previewer_maker,
     mappings = {
       n = {
         ["q"] = require("telescope.actions").close,
@@ -113,7 +114,13 @@ M.telescope = {
     },
   },
 
-  extensions_list = { "themes", "terms", "fzf" },
+  extensions_list = {
+    "themes",
+    "terms",
+    "fzf",
+    "ast_grep",
+    file_browser = { hijack_netrw = true },
+  },
 }
 
 return M

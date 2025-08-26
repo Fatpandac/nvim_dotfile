@@ -5,16 +5,12 @@ M.general = {
   n = {
     ["<leader>X"] = { ":BufOnly<CR>", "clear all buffer without current" },
     ["tj"] = { ":tabn<CR>", "go to next tab" },
-    ["tk"] = { ":tabp<CR>", "go to preivous tab" },
-    ["tn"] = { ":tabnew<CR>", "creat to new tab" },
+    ["tk"] = { ":tabp<CR>", "go to previous tab" },
+    ["tn"] = { ":tabnew<CR>", "crate to new tab" },
     ["tx"] = { ":tabclose<CR>", "close current tab" },
+    ["<leader>fa"] = { ":Telescope ast_grep<CR>", "Telescope by word" },
     ["gx"] = { "<esc>:URLOpenUnderCursor<CR>", "open current url" },
     ["<leader>fc"] = { ":Telescope commands<CR>", "open command" },
-    ["<leader>u"] = { ":UndotreeToggle<CR>", "open undo tree" },
-    ["<leader>i"] = {
-      ":lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({0}),{0})<CR>",
-      "show inlay hit",
-    },
     ["<leader>cc"] = {
       ":copen<CR>",
       "open quickfix list",
@@ -25,7 +21,7 @@ M.general = {
     },
     ["<C-k>"] = {
       "<C-o>",
-      "jump to preivous cursor position",
+      "jump to previous cursor position",
     },
     ["cl"] = {
       function()
@@ -34,18 +30,6 @@ M.general = {
         vim.fn.setreg("+", file .. ":" .. line)
       end,
       "Copy current cursor position to clipboard",
-    },
-    ["<leader>mr"] = {
-      function()
-        vim.cmd "make run"
-      end,
-      "Run makefile run",
-    },
-    ["<leader>mb"] = {
-      function()
-        vim.cmd "make build"
-      end,
-      "Run makefile build",
     },
     ["<C-n>"] = {
       function()
@@ -69,13 +53,7 @@ M.general = {
       end,
       "clear all buffer without current",
     },
-    ["<leader>c"] = {
-      function()
-        vim.cmd "lua require('silicon').visualise_cmdline({to_clip = true})"
-      end,
-      "Copy code to png into clipboard",
-    },
-  },
+  }
 }
 
 return M

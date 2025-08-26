@@ -2,6 +2,23 @@ local overrides = require "custom.configs.overrides"
 
 local plugins = {
   {
+    "kawre/leetcode.nvim",
+    build = ":TSUpdate html",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+    cmd = "Leet",
+    opts = {
+      lang = "javascript",
+      cn = {
+        enabled = true,
+        translator = true,
+        translate_problems = true,
+      },
+    },
+  },
+  {
     "mikavilpas/yazi.nvim",
     event = "VeryLazy",
     opts = {
@@ -34,10 +51,6 @@ local plugins = {
         },
       }
     end,
-  },
-  {
-    "nvim-telescope/telescope-fzf-native.nvim",
-    build = "make",
   },
   {
     "github/copilot.vim",
@@ -98,8 +111,25 @@ local plugins = {
     opts = overrides.treesitter,
   },
   {
+    "3rd/image.nvim",
+    build = false,
+    opts = {
+      processor = "magick_cli",
+      integrations = {
+        markdown = {
+          enabled = false
+        }
+      }
+    }
+  },
+  {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter", "ibhagwan/fzf-lua" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-lua/popup.nvim",
+      "nvim-telescope/telescope-fzf-native.nvim",
+      "Marskey/telescope-sg"
+    },
     cmd = "Telescope",
     init = function()
       require("core.utils").load_mappings "telescope"
