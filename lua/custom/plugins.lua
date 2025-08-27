@@ -2,24 +2,8 @@ local overrides = require "custom.configs.overrides"
 
 local plugins = {
   {
-    "kawre/leetcode.nvim",
-    build = ":TSUpdate html",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-    },
-    cmd = "Leet",
-    opts = {
-      lang = "javascript",
-      cn = {
-        enabled = true,
-        translator = true,
-        translate_problems = true,
-      },
-    },
-  },
-  {
     "mikavilpas/yazi.nvim",
+    version = "v10.0.2",
     event = "VeryLazy",
     opts = {
       keymaps = {
@@ -127,7 +111,10 @@ local plugins = {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-lua/popup.nvim",
-      "nvim-telescope/telescope-fzf-native.nvim",
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'make'
+      },
       "Marskey/telescope-sg"
     },
     cmd = "Telescope",
