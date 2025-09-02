@@ -53,8 +53,13 @@ M.general = {
       end,
       "clear all buffer without current",
     },
-    ["gcc"] = { "<Nop>", "Disable gcc"},
     ["gbc"] = { "<Nop>", "Disable gcc"},
+    ["<leader>f"] = {
+      function()
+        require("fine-cmdline").open({default_value = "find "})
+      end,
+      "open find",
+    }
   }
 }
 
