@@ -1,5 +1,5 @@
 local function telescope_image_preview()
-  local supported_images = { "svg", "png", "jpg", "jpeg", "webp", "avif" }
+  local supported_images = { "png", "jpg", "jpeg", "webp" }
   local from_entry = require("telescope.from_entry")
   local Path = require("plenary.path")
   local conf = require("telescope.config").values
