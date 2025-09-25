@@ -4,10 +4,6 @@ local M = {}
 M.general = {
   n = {
     ["<leader>X"] = { ":BufOnly<CR>", "clear all buffer without current" },
-    ["tj"] = { ":tabn<CR>", "go to next tab" },
-    ["tk"] = { ":tabp<CR>", "go to previous tab" },
-    ["tn"] = { ":tabnew<CR>", "crate to new tab" },
-    ["tx"] = { ":tabclose<CR>", "close current tab" },
     ["<leader>fa"] = { ":Telescope ast_grep<CR>", "Telescope by word" },
     ["gx"] = { "<esc>:URLOpenUnderCursor<CR>", "open current url" },
     ["<leader>fc"] = { ":Telescope commands<CR>", "open command" },
@@ -53,13 +49,13 @@ M.general = {
       end,
       "clear all buffer without current",
     },
-    ["gbc"] = { "<Nop>", "Disable gcc"},
+    ["gbc"] = { "<Nop>", "Disable gcc" },
     ["<leader>f"] = {
       function()
-        require("fine-cmdline").open({default_value = "find "})
+        require("fine-cmdline").open({ default_value = "find " })
       end,
       "open find",
-    }
+    },
   }
 }
 
