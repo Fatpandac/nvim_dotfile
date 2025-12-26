@@ -23,3 +23,4 @@ vim.keymap.set("n", "cl", function()
   local file = vim.fn.expand "%"
   vim.fn.setreg("+", file .. ":" .. line)
 end, { silent = true })
+vim.keymap.set("n", "<Esc>", "<cmd> noh <CR>", { silent = true })
