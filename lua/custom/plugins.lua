@@ -71,6 +71,7 @@ local plugins = {
   },
   {
     "neovim/nvim-lspconfig",
+    version = "v1.*",
     dependencies = {
       -- format & linting
       {

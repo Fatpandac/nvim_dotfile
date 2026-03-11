@@ -12,8 +12,3 @@ autocmd({ "BufEnter", "WinEnter" }, {
   pattern = "*",
   command = "set statusline=%{repeat('',winwidth('.'))}",
 })
-
-autocmd({ "BufEnter", "BufWinEnter" }, {
-  pattern = { "*/Work/*" },
-  command = "Copilot disable",
-})
