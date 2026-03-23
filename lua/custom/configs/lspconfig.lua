@@ -16,6 +16,12 @@ for _, lsp in ipairs(servers) do
 end
 
 lspconfig.ts_ls.setup {
+  name = 'ts_go',
+  cmd = {
+    "tsgo",
+    "--lsp",
+    "--stdio"
+  },
   on_attach = on_attach,
   capabilities = capabilities,
   init_options = {
