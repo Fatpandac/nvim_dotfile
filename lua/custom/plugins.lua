@@ -2,6 +2,10 @@ local overrides = require "custom.configs.overrides"
 
 local plugins = {
   {
+    "https://github.com/FelipeLema/cmp-async-path.git",
+    name = "cmp-async-path",
+  },
+  {
     "mikavilpas/yazi.nvim",
     version = "v10.0.2",
     event = "VeryLazy",
@@ -13,7 +17,7 @@ local plugins = {
   },
   {
     "narutoxy/silicon.lua",
-    requires = { "nvim-lua/plenary.nvim" },
+    dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require("silicon").setup {
         theme = "Visual Studio Dark+",
@@ -71,29 +75,26 @@ local plugins = {
   },
   {
     "neovim/nvim-lspconfig",
-    version = "v1.*",
+    lazy = false,
     dependencies = {
       -- format & linting
       {
-        "jose-elias-alvarez/null-ls.nvim",
+        "nvimtools/none-ls.nvim",
         config = function()
           require "custom.configs.null-ls"
         end,
       },
     },
     config = function()
-      require "plugins.configs.lspconfig"
-      require "custom.configs.lspconfig"
+      require "configs.lspconfig"
     end, -- Override to setup mason-lspconfig
   },
   -- override plugin configs
   {
-    "williamboman/mason.nvim",
-    opts = overrides.mason,
-  },
-  {
     "nvim-treesitter/nvim-treesitter",
-    opts = overrides.treesitter,
+    opts = function(_, opts)
+      return vim.tbl_deep_extend("force", opts, overrides.treesitter)
+    end,
   },
   {
     "3rd/image.nvim",
@@ -119,14 +120,11 @@ local plugins = {
       "Marskey/telescope-sg"
     },
     cmd = "Telescope",
-    init = function()
-      require("core.utils").load_mappings "telescope"
-    end,
-    opts = function()
-      return overrides.telescope
-    end,
+    opts = overrides.telescope,
     config = function(_, opts)
-      dofile(vim.g.base46_cache .. "telescope")
+      if vim.uv.fs_stat(vim.g.base46_cache .. "telescope") then
+        dofile(vim.g.base46_cache .. "telescope")
+      end
       local telescope = require "telescope"
       telescope.setup(opts)
 
@@ -166,7 +164,15 @@ local plugins = {
     },
     opts = function()
       local cmp = require "cmp"
-      local options = require "plugins.configs.cmp"
+      local options = require "nvchad.configs.cmp"
+
+      options.sources = {
+        { name = "nvim_lsp" },
+        { name = "luasnip" },
+        { name = "buffer" },
+        { name = "nvim_lua" },
+        { name = "path" },
+      }
 
       options.mapping["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then

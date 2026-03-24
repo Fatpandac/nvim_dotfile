@@ -6,7 +6,6 @@ local function telescope_image_preview()
   local Previewers = require("telescope.previewers")
 
   local previewers = require("telescope.previewers")
-  local image_api = require("image")
 
   local is_image_preview = false
   local image = nil
@@ -29,6 +28,11 @@ local function telescope_image_preview()
   end
 
   local create_image = function(filepath, winid, bufnr)
+    local ok, image_api = pcall(require, "image")
+    if not ok then
+      return
+    end
+
     image = image_api.hijack_buffer(filepath, winid, bufnr)
 
     if not image then
@@ -69,7 +73,7 @@ local function telescope_image_preview()
   -- NOTE: Add teardown to cat previewer to clear image when close Telescope
   local file_previewer = defaulter(function(opts)
     opts = opts or {}
-    local cwd = opts.cwd or vim.loop.cwd()
+    local cwd = opts.cwd or vim.uv.cwd()
     return Previewers.new_buffer_previewer({
       title = "File Preview",
       dyn_title = function(_, entry)
@@ -121,4 +125,3 @@ local function telescope_image_preview()
 end
 
 return telescope_image_preview()
-
