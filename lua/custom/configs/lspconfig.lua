@@ -1,5 +1,15 @@
 local util = require "lspconfig.util"
 local map = vim.keymap.set
+local hover_handler = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = "rounded",
+  max_width = math.floor(vim.o.columns * 0.6),
+  max_height = math.floor(vim.o.lines * 0.5),
+})
+local signature_handler = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  border = "rounded",
+  max_width = math.floor(vim.o.columns * 0.6),
+  max_height = math.floor(vim.o.lines * 0.4),
+})
 
 local function get_tsdk(root_dir)
   local local_ts = root_dir and util.path.join(root_dir, "node_modules", "typescript", "lib")
@@ -92,10 +102,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
       or ft == "typescript"
       or ft == "typescriptreact"
 
-    map("n", "K", vim.lsp.buf.hover, opts)
+    map("n", "K", function()
+      vim.lsp.buf.hover { border = "rounded", max_width = math.floor(vim.o.columns * 0.6) }
+    end, opts)
     map("n", "gi", vim.lsp.buf.implementation, opts)
     map("n", "gr", vim.lsp.buf.references, opts)
-    map("n", "<leader>ls", vim.lsp.buf.signature_help, opts)
+    map("n", "<leader>ls", function()
+      vim.lsp.buf.signature_help { border = "rounded", max_width = math.floor(vim.o.columns * 0.6) }
+    end, opts)
     map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
     map("n", "<leader>D", vim.lsp.buf.type_definition, opts)
     map("n", "<leader>lf", function()
@@ -121,6 +135,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
   end,
 })
+
+vim.lsp.handlers["textDocument/hover"] = hover_handler
+vim.lsp.handlers["textDocument/signatureHelp"] = signature_handler
 
 -- if you just want default config for the servers then put them in a table
 local servers = {
