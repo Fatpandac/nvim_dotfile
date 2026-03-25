@@ -139,6 +139,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
 vim.lsp.handlers["textDocument/hover"] = hover_handler
 vim.lsp.handlers["textDocument/signatureHelp"] = signature_handler
 
+vim.diagnostic.config {
+  virtual_text = {
+    source = "if_many",
+    format = function(diagnostic)
+      if diagnostic.source then
+        return string.format("[%s] %s", diagnostic.source, diagnostic.message)
+      end
+
+      return diagnostic.message
+    end,
+  },
+  float = {
+    source = true,
+    border = "rounded",
+  },
+}
+
 -- if you just want default config for the servers then put them in a table
 local servers = {
   "html", "cssls", "pyright", "rust_analyzer",
