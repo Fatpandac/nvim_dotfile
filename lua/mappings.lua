@@ -7,6 +7,37 @@ map("n", "<leader>fa", "<cmd>Telescope ast_grep<CR>", { desc = "telescope ast gr
 map("n", "<leader>gb", function()
   require("gitsigns").blame_line()
 end, { desc = "git blame line" })
+map("n", "]c", function()
+  if vim.wo.diff then
+    return "]c"
+  end
+
+  vim.schedule(function()
+    require("gitsigns").next_hunk()
+  end)
+
+  return "<Ignore>"
+end, { desc = "Jump to next hunk", expr = true })
+map("n", "[c", function()
+  if vim.wo.diff then
+    return "[c"
+  end
+
+  vim.schedule(function()
+    require("gitsigns").prev_hunk()
+  end)
+
+  return "<Ignore>"
+end, { desc = "Jump to prev hunk", expr = true })
+map("n", "<leader>rh", function()
+  require("gitsigns").reset_hunk()
+end, { desc = "Reset hunk" })
+map("n", "<leader>ph", function()
+  require("gitsigns").preview_hunk()
+end, { desc = "Preview hunk" })
+map("n", "<leader>td", function()
+  require("gitsigns").toggle_deleted()
+end, { desc = "Toggle deleted" })
 map("n", "gx", function()
   local url = vim.fn.expand "<cfile>"
   if url ~= "" then
@@ -32,3 +63,15 @@ map("n", "<leader>x", function()
   end
 end, { desc = "close quickfix or buffer" })
 map("n", "gbc", "<Nop>", { desc = "disable gcc" })
+
+map("t", "<C-x>", vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), { desc = "Escape terminal mode" })
+
+map("v", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = "Move up", expr = true })
+map("v", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = "Move down", expr = true })
+map("v", "<", "<gv", { desc = "Indent line" })
+map("v", ">", ">gv", { desc = "Indent line" })
+map("v", "<leader>/", "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", { desc = "Toggle comment" })
+
+map("x", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = "Move down", expr = true })
+map("x", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = "Move up", expr = true })
+map("x", "p", 'p:let @+=@0<CR>:let @"=@0<CR>', { desc = "Dont copy replaced text", silent = true })

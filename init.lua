@@ -2,7 +2,7 @@ vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
 if vim.g.vscode then
-  dofile(vim.api.nvim_get_runtime_file("lua/custom/vscode.lua", false)[1])
+  dofile(vim.api.nvim_get_runtime_file("lua/vscode.lua", false)[1])
   return
 end
 

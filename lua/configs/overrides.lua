@@ -1,17 +1,17 @@
 local M = {}
 
-local select_one_or_multi = function(prompt_bufnr)
-  local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
+local function select_one_or_multi(prompt_bufnr)
+  local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
   local multi = picker:get_multi_selection()
   if not vim.tbl_isempty(multi) then
-    require('telescope.actions').close(prompt_bufnr)
-    for _, j in pairs(multi) do
-      if j.path ~= nil then
-        vim.cmd(string.format('%s %s', 'edit', j.path))
+    require("telescope.actions").close(prompt_bufnr)
+    for _, entry in pairs(multi) do
+      if entry.path ~= nil then
+        vim.cmd(string.format("%s %s", "edit", entry.path))
       end
     end
   else
-    require('telescope.actions').select_default(prompt_bufnr)
+    require("telescope.actions").select_default(prompt_bufnr)
   end
 end
 
@@ -37,27 +37,6 @@ M.treesitter = {
     },
   },
 }
-
-M.mason = {
-  ensure_installed = {
-    -- lua stuff
-    "lua-language-server",
-    "stylua",
-
-    -- web dev stuff
-    "css-lsp",
-    "html-lsp",
-    "typescript-language-server",
-    "deno",
-    "prettier",
-
-    -- c/cpp stuff
-    "clangd",
-    "clang-format",
-  },
-}
-
-local image_preview = require("custom.configs.image-preview")
 
 M.telescope = {
   defaults = {
@@ -98,22 +77,20 @@ M.telescope = {
     border = {},
     borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
     color_devicons = true,
-    set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
-    file_previewer = image_preview.file_previewer,
+    set_env = { COLORTERM = "truecolor" },
+    file_previewer = require("configs.image_preview").file_previewer,
     qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-    -- Developer configurations: Not meant for general override
-    buffer_previewer_maker = image_preview.buffer_previewer_maker,
+    buffer_previewer_maker = require("configs.image_preview").buffer_previewer_maker,
     mappings = {
       n = {
         ["q"] = require("telescope.actions").close,
-        ['<CR>'] = select_one_or_multi
+        ["<CR>"] = select_one_or_multi,
       },
       i = {
-        ['<CR>'] = select_one_or_multi
-      }
+        ["<CR>"] = select_one_or_multi,
+      },
     },
   },
-
   extensions_list = {
     "themes",
     "terms",

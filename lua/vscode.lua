@@ -1,7 +1,48 @@
-require("custom.base")
+vim.g.toggle_theme_icon = ""
+vim.g.nvim_tree_respect_buf_cwd = 1
+
+vim.g.netrw_dynamic_maxfilenamelen = 32
+vim.g.netrw_preview = 1
+vim.g.netrw_alto = 0
+
+vim.opt.laststatus = 0
+vim.opt.foldmethod = "indent"
+vim.opt.foldcolumn = "0"
+vim.opt.foldlevel = 1
+vim.opt.foldlevelstart = 99
+vim.opt.ttyfast = true
+vim.opt.regexpengine = 0
+vim.opt.relativenumber = true
+vim.opt.conceallevel = 2
+vim.opt.virtualedit = "block"
+vim.opt.wrap = false
+vim.opt.backup = false
+vim.opt.undofile = true
+vim.opt.undodir = os.getenv "HOME" .. "/.vim/undodir"
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+vim.opt.scrolloff = 8
+vim.opt.colorcolumn = "80"
+vim.opt.mouse = ""
+vim.opt.updatetime = 4000
+
+vim.loader.enable()
+
+vim.g.clipboard = {
+  name = "pbcopy",
+  copy = {
+    ["+"] = "pbcopy",
+    ["*"] = "pbcopy",
+  },
+  paste = {
+    ["+"] = "pbpaste",
+    ["*"] = "pbpaste",
+  },
+  cache_enabled = 0,
+}
 
 vim.g.mapleader = " "
-vim.keymap.set('n', 'j', ":call VSCodeCall('cursorDown')<CR>", { noremap = false, silent = true })
+vim.keymap.set("n", "j", ":call VSCodeCall('cursorDown')<CR>", { noremap = false, silent = true })
 vim.keymap.set("n", "k", ":call VSCodeCall('cursorUp')<CR>", { noremap = false, silent = true })
 vim.keymap.set("n", "<leader>x", ":call VSCodeNotify('workbench.action.closeActiveEditor')<CR>", { silent = true })
 vim.keymap.set("n", "<leader>X", ":call VSCodeNotify('workbench.action.closeOtherEditors')<CR>", { silent = true })

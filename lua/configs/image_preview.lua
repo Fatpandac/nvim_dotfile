@@ -4,37 +4,34 @@ local function telescope_image_preview()
   local Path = require("plenary.path")
   local conf = require("telescope.config").values
   local Previewers = require("telescope.previewers")
-
   local previewers = require("telescope.previewers")
 
   local is_image_preview = false
   local image = nil
   local last_file_path = ""
 
-  local is_supported_image = function(filepath)
+  local function is_supported_image(filepath)
     local split_path = vim.split(filepath:lower(), ".", { plain = true })
     local extension = split_path[#split_path]
     return vim.tbl_contains(supported_images, extension)
   end
 
-  local delete_image = function()
+  local function delete_image()
     if not image then
       return
     end
 
     image:clear()
-
     is_image_preview = false
   end
 
-  local create_image = function(filepath, winid, bufnr)
+  local function create_image(filepath, winid, bufnr)
     local ok, image_api = pcall(require, "image")
     if not ok then
       return
     end
 
     image = image_api.hijack_buffer(filepath, winid, bufnr)
-
     if not image then
       return
     end
@@ -70,43 +67,38 @@ local function telescope_image_preview()
     }
   end
 
-  -- NOTE: Add teardown to cat previewer to clear image when close Telescope
   local file_previewer = defaulter(function(opts)
     opts = opts or {}
     local cwd = opts.cwd or vim.uv.cwd()
-    return Previewers.new_buffer_previewer({
+    return Previewers.new_buffer_previewer {
       title = "File Preview",
       dyn_title = function(_, entry)
         return Path:new(from_entry.path(entry, true)):normalize(cwd)
       end,
-
       get_buffer_by_name = function(_, entry)
         return from_entry.path(entry, true)
       end,
-
       define_preview = function(self, entry, _)
-        local p = from_entry.path(entry, true)
-        if p == nil or p == "" then
+        local path = from_entry.path(entry, true)
+        if path == nil or path == "" then
           return
         end
 
-        conf.buffer_previewer_maker(p, self.state.bufnr, {
+        conf.buffer_previewer_maker(path, self.state.bufnr, {
           bufname = self.state.bufname,
           winid = self.state.winid,
           preview = opts.preview,
         })
       end,
-
-      teardown = function(_)
+      teardown = function()
         if is_image_preview then
           delete_image()
         end
       end,
-    })
+    }
   end, {})
 
-  local buffer_previewer_maker = function(filepath, bufnr, opts)
-    -- NOTE: Clear image when preview other file
+  local function buffer_previewer_maker(filepath, bufnr, opts)
     if is_image_preview and last_file_path ~= filepath then
       delete_image()
     end
@@ -121,7 +113,10 @@ local function telescope_image_preview()
     end
   end
 
-  return { buffer_previewer_maker = buffer_previewer_maker, file_previewer = file_previewer.new }
+  return {
+    buffer_previewer_maker = buffer_previewer_maker,
+    file_previewer = file_previewer.new,
+  }
 end
 
 return telescope_image_preview()

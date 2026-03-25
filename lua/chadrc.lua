@@ -1,18 +1,31 @@
-local highlights = require "custom.highlights"
-local mason = require("custom.configs.overrides").mason
-
 ---@type ChadrcConfig
 local M = {}
 
 M.base46 = {
   theme = "bearded-arc",
   theme_toggle = { "bearded-arc", "one_light" },
-  hl_override = highlights.override,
-  hl_add = highlights.add,
+  hl_override = {
+    Comment = {
+      italic = true,
+    },
+  },
+  hl_add = {
+    NvimTreeOpenedFolderName = { fg = "green", bold = true },
+  },
 }
 
 M.mason = {
-  pkgs = mason.ensure_installed,
+  pkgs = {
+    "lua-language-server",
+    "stylua",
+    "css-lsp",
+    "html-lsp",
+    "typescript-language-server",
+    "deno",
+    "prettier",
+    "clangd",
+    "clang-format",
+  },
 }
 
 return M
