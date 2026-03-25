@@ -4,6 +4,9 @@ local map = vim.keymap.set
 
 map("n", "<leader>X", "<cmd>BufOnly<CR>", { desc = "clear all buffer without current" })
 map("n", "<leader>fa", "<cmd>Telescope ast_grep<CR>", { desc = "telescope ast grep" })
+map("n", "<leader>gb", function()
+  require("gitsigns").blame_line()
+end, { desc = "git blame line" })
 map("n", "gx", function()
   local url = vim.fn.expand "<cfile>"
   if url ~= "" then
