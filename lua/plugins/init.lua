@@ -83,17 +83,15 @@ return {
   {
     "neovim/nvim-lspconfig",
     lazy = false,
-    dependencies = {
-      {
-        "nvimtools/none-ls.nvim",
-        config = function()
-          require "configs.null_ls"
-        end,
-      },
-    },
     config = function()
       require "configs.lspconfig"
     end,
+  },
+  {
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    opts = require "configs.conform",
   },
   {
     "nvim-treesitter/nvim-treesitter",
