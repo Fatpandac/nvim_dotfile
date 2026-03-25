@@ -5,6 +5,25 @@ local plugins = {
     import = "nvchad.blink.lazyspec",
   },
   {
+    "saghen/blink.pairs",
+    version = "*",
+    dependencies = "saghen/blink.download",
+    event = "InsertEnter",
+    opts = {
+      mappings = {
+        enabled = true,
+        cmdline = true,
+      },
+      highlights = {
+        enabled = true,
+        cmdline = true,
+        matchparen = {
+          enabled = true,
+        },
+      },
+    },
+  },
+  {
     "mikavilpas/yazi.nvim",
     version = "v10.0.2",
     event = "VeryLazy",
