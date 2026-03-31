@@ -49,8 +49,8 @@ map("n", "<leader>cc", "<cmd>copen<CR>", { desc = "open quickfix list" })
 map("n", "<leader>fm", function()
   require("conform").format { async = true, lsp_format = "fallback" }
 end, { desc = "format buffer" })
-map("n", "<C-j>", "<C-i>", { desc = "jump to next cursor position" })
-map("n", "<C-k>", "<C-o>", { desc = "jump to previous cursor position" })
+map("n", "<C-j>", "<cmd>tabnext<CR>", { desc = "next tab" })
+map("n", "<C-k>", "<cmd>tabprevious<CR>", { desc = "previous tab" })
 map("n", "cl", function()
   local line = vim.fn.line "."
   local file = vim.fn.expand "%"
