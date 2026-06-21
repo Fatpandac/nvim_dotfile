@@ -73,10 +73,6 @@ return {
     },
   },
   {
-    "wakatime/vim-wakatime",
-    event = "InsertEnter",
-  },
-  {
     "vim-scripts/BufOnly.vim",
     event = "InsertEnter",
   },
